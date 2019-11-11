@@ -3,7 +3,7 @@
 [![React version](https://img.shields.io/npm/dependency-version/use-drags/peer/react.svg?style=flat&logo=react)](https://reactjs.org/)
 
 # use-drags
-Handle drag events without overhead by only 1 callback. "React hook" for manage drag and drop lifecycle without extra business or view logic.
+Handle drag events without overhead by only 1 callback. React hook for manage drag and drop lifecycle without extra business or view logic.
 Useful as base for custom UI components with draggable elements.
 
 # Install
