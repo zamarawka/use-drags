@@ -51,7 +51,12 @@ function DraggableBlock() {
   });
 
   return (
-    <div ref={ref}>Drag me! {position !== null && <>X: {position.clientX }, Y: {position.clientY}</>}</div>
+    <div ref={ref}>
+      <span>Drag me!</span>
+      {position !== null &&
+        <span>X: {position.clientX }, Y: {position.clientY}</span>
+      }
+    </div>
   );
 }
 ```
