@@ -1,6 +1,6 @@
 {
   "name": "use-drags",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Useful way to handle drag gestures. Covers whole drag and drop lifecycle.",
   "main": "lib",
   "scripts": {
