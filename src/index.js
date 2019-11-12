@@ -5,9 +5,10 @@ const POINTER_MOVE_EVENTS = ['mousemove', 'touchmove'];
 const POINTER_END_EVENTS = ['mouseup', 'touchend'];
 
 const MOUSE_LEFT_KEY = 1;
+const { TouchEvent } = window;
 
 function eventsEqualizer(e) {
-  if (e instanceof TouchEvent) {
+  if (TouchEvent && e instanceof TouchEvent) {
     if (e.touches.length > 0) {
       e.clientX = e.touches[0].clientX;
       e.clientY = e.touches[0].clientY;
