@@ -3,18 +3,23 @@
 [![React version](https://img.shields.io/npm/dependency-version/use-drags/peer/react.svg?style=flat&logo=react)](https://reactjs.org/)
 
 # use-drags
+
 Handle drag events without overhead by only 1 callback. React hook for manage drag and drop lifecycle without extra business or view logic.
 Useful as base for custom UI components with draggable elements.
 
+[Demo](https://zamarawka.github.io/use-drags/)
+
+Package includes its TypeScript Definitions
+
 # Install
 
-``` sh
+```sh
 npm install use-drags
 ```
 
 # Usage
 
-``` jsx
+```jsx
 import React, { useRef, useState } = 'react';
 import useDrags from 'use-drags';
 
@@ -63,7 +68,7 @@ function DraggableBlock() {
 
 # Development
 
-``` sh
+```sh
 npm run lint # linting
 npm run test # testing
 ```
