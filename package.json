@@ -3,9 +3,16 @@
   "version": "1.0.3",
   "description": "Useful way to handle drag gestures. Covers whole drag and drop lifecycle.",
   "main": "lib",
+  "module": "lib/esm",
+  "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest",
-    "build": "babel --out-dir lib src",
+    "format": "prettier --write src",
+    "type-check": "tsc --noEmit",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:cjs": "babel src --out-dir lib --extensions \".ts,.tsx\" --ignore '**/*.d.ts' --source-maps",
+    "build:esm": "tsc -m esNext --declarationDir lib/esm --outDir lib/esm",
+    "build": "npm run build:types && npm run build:cjs && npm run build:esm",
     "test:coverage": "jest --coverage",
     "lint": "eslint src test"
   },
@@ -28,7 +35,10 @@
     "testEnvironment": "jsdom",
     "collectCoverageFrom": [
       "src/**.*"
-    ]
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    }
   },
   "devDependencies": {
     "@babel/cli": "^7.7.0",

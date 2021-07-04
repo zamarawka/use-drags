@@ -1,17 +1,14 @@
-import React from "react";
-import { render, cleanup, act, fireEvent, waitForDomChange } from '@testing-library/react';
+import { render, cleanup, act, fireEvent } from '@testing-library/react';
 
 import { CustomDiv, getEvent } from './helpers/wrappers';
 
 afterEach(cleanup);
 
-const lifecycleTests = (gesture) => {
-  it('should not handle gesture move\'s or end around', () => {
+const lifecycleTests = (gesture: Parameters<typeof getEvent>[1]) => {
+  it("should not handle gesture move's or end around", () => {
     const onDrag = jest.fn();
-    const { container, rerender } = render(<CustomDiv onDrag={onDrag} />);
+    const { container } = render(<CustomDiv onDrag={onDrag} />);
     const div = container.firstChild;
-
-    rerender(<CustomDiv />);
 
     act(() => {
       fireEvent(div, getEvent('move', gesture));
@@ -28,10 +25,8 @@ const lifecycleTests = (gesture) => {
 
   it('should handle gesture start event', () => {
     const onDrag = jest.fn();
-    const { container, rerender } = render(<CustomDiv onDrag={onDrag} />);
+    const { container } = render(<CustomDiv onDrag={onDrag} />);
     const div = container.firstChild;
-
-    rerender(<CustomDiv />);
 
     act(() => {
       fireEvent(div, getEvent('start', gesture));
@@ -41,16 +36,14 @@ const lifecycleTests = (gesture) => {
     expect(onDrag.mock.calls[0][0]).toMatchObject({
       first: true,
       clientX: 0,
-      clientY: 0
+      clientY: 0,
     });
   });
 
   it('should handle gesture move event', () => {
     const onDrag = jest.fn();
-    const { container, rerender } = render(<CustomDiv onDrag={onDrag} />);
+    const { container } = render(<CustomDiv onDrag={onDrag} />);
     const div = container.firstChild;
-
-    rerender(<CustomDiv />);
 
     act(() => {
       fireEvent(div, getEvent('start', gesture, { clientX: 5, clientY: 5 }));
@@ -69,7 +62,7 @@ const lifecycleTests = (gesture) => {
       offsetX: 5,
       offsetY: 15,
       clientX: 10,
-      clientY: 20
+      clientY: 20,
     });
 
     act(() => {
@@ -83,16 +76,14 @@ const lifecycleTests = (gesture) => {
       offsetX: 20,
       offsetY: 40,
       clientX: 25,
-      clientY: 45
+      clientY: 45,
     });
   });
 
   it('should handle gesture end event', () => {
     const onDrag = jest.fn();
-    const { container, rerender } = render(<CustomDiv onDrag={onDrag} />);
+    const { container } = render(<CustomDiv onDrag={onDrag} />);
     const div = container.firstChild;
-
-    rerender(<CustomDiv />);
 
     act(() => {
       fireEvent(div, getEvent('start', gesture, { clientX: 5, clientY: 5 }));
@@ -108,7 +99,7 @@ const lifecycleTests = (gesture) => {
     expect(onDrag.mock.calls[1][0]).toMatchObject({
       last: true,
       clientX: 10,
-      clientY: 20
+      clientY: 20,
     });
   });
 };
@@ -116,13 +107,11 @@ const lifecycleTests = (gesture) => {
 describe('Mouse events', () => {
   it('should not handle mouse start event wich started not with left key', () => {
     const onDrag = jest.fn();
-    const { container, rerender } = render(<CustomDiv onDrag={onDrag} />);
+    const { container } = render(<CustomDiv onDrag={onDrag} />);
     const div = container.firstChild;
 
-    rerender(<CustomDiv />);
-
     act(() => {
-      fireEvent(div, new MouseEvent('mousedown', { which: 2 }));
+      fireEvent(div, new MouseEvent('mousedown', { button: 1 }));
     });
 
     expect(onDrag).toHaveBeenCalledTimes(0);
@@ -134,13 +123,11 @@ describe('Mouse events', () => {
 describe('Touch events', () => {
   it('should set touch actions on draggable element to none', () => {
     const onDrag = jest.fn();
-    const { container, rerender } = render(<CustomDiv onDrag={onDrag} />);
+    const { container } = render(<CustomDiv onDrag={onDrag} />);
     const div = container.firstChild;
 
-    rerender(<CustomDiv />);
-
-    expect(div.style).toHaveProperty('touchAction', 'none');
-  })
+    expect((div as HTMLDivElement).style).toHaveProperty('touchAction', 'none');
+  });
 
   lifecycleTests('touch');
 });
