@@ -14,7 +14,9 @@
     "build:esm": "tsc -m esNext --declarationDir lib/esm --outDir lib/esm",
     "build": "npm run build:types && npm run build:cjs && npm run build:esm",
     "test:coverage": "jest --coverage",
-    "lint": "eslint src test"
+    "lint": "eslint src test",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "keywords": [
     "drag",
