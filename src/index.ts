@@ -125,17 +125,22 @@ export default function useDragged<T extends HTMLElement>(
 
     function onPointerEnd(e: MouseEvent | TouchEvent) {
       const { clientX, clientY } = getClientCoords(e);
+      const deltaX = clientX - lastCoords.current.x;
+      const deltaY = clientY - lastCoords.current.y;
+      const offsetX = clientX - firstCoords.current.x;
+      const offsetY = clientY - firstCoords.current.y;
 
+      firstCoords.current = null;
       lastCoords.current = null;
 
       cb({
         el,
         first: false,
         last: true,
-        deltaX: 0,
-        deltaY: 0,
-        offsetX: 0,
-        offsetY: 0,
+        deltaX,
+        deltaY,
+        offsetX,
+        offsetY,
         clientX,
         clientY,
       });
