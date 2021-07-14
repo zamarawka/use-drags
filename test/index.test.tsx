@@ -35,8 +35,13 @@ const lifecycleTests = (gesture: Parameters<typeof getEvent>[1]) => {
     expect(onDrag).toHaveBeenCalledTimes(1);
     expect(onDrag.mock.calls[0][0]).toMatchObject({
       first: true,
+      last: false,
       clientX: 0,
       clientY: 0,
+      deltaX: 0,
+      deltaY: 0,
+      offsetX: 0,
+      offsetY: 0,
     });
   });
 
@@ -57,6 +62,8 @@ const lifecycleTests = (gesture: Parameters<typeof getEvent>[1]) => {
 
     expect(onDrag).toHaveBeenCalledTimes(2);
     expect(onDrag.mock.calls[1][0]).toMatchObject({
+      first: false,
+      last: false,
       deltaX: 5,
       deltaY: 15,
       offsetX: 5,
@@ -71,6 +78,8 @@ const lifecycleTests = (gesture: Parameters<typeof getEvent>[1]) => {
 
     expect(onDrag).toHaveBeenCalledTimes(3);
     expect(onDrag.mock.calls[2][0]).toMatchObject({
+      first: false,
+      last: false,
       deltaX: 15,
       deltaY: 25,
       offsetX: 20,
@@ -97,9 +106,14 @@ const lifecycleTests = (gesture: Parameters<typeof getEvent>[1]) => {
 
     expect(onDrag).toHaveBeenCalledTimes(2);
     expect(onDrag.mock.calls[1][0]).toMatchObject({
+      first: false,
       last: true,
       clientX: 10,
       clientY: 20,
+      offsetX: 5,
+      offsetY: 15,
+      deltaX: 5,
+      deltaY: 15,
     });
   });
 };
