@@ -79,6 +79,28 @@ export function useEventCallback<T extends (...args: any[]) => any>(
   );
 }
 
+export const useDragsEvent = Symbol('useDragsEvent');
+
+function oldIosFix(e: MouseEvent | TouchEvent) {
+  if ((e as any)[useDragsEvent]) {
+    e.preventDefault();
+  }
+}
+
+let isPatchedIos = false;
+const ua = window.navigator.userAgent;
+const isSafari = ua.indexOf('Safari') !== -1 && ua.indexOf('Chrome') === -1;
+const safariVersion = ua.match(/Version\/(.*?) /);
+const isOldSafari = isSafari && safariVersion && parseInt(safariVersion[1], 10) < 13;
+
+function patchIos() {
+  if (isOldSafari) {
+    document.addEventListener('touchmove', oldIosFix, { passive: false });
+  }
+
+  isPatchedIos = true;
+}
+
 export default function useDragged<T extends HTMLElement>(
   elRef: RefObject<T>,
   onDrag: onDragCb<T>,
@@ -97,6 +119,8 @@ export default function useDragged<T extends HTMLElement>(
     el.style.touchAction = 'none';
 
     function onPointerMove(e: MouseEvent | TouchEvent) {
+      (e as any)[useDragsEvent] = true;
+
       if (lastCoords.current) {
         const { clientX, clientY } = getClientCoords(e);
         const deltaX = clientX - lastCoords.current.x;
@@ -182,6 +206,10 @@ export default function useDragged<T extends HTMLElement>(
     }
 
     on(el, POINTER_START_EVENTS, onPointerStart);
+
+    if (!isPatchedIos) {
+      patchIos();
+    }
 
     return () => {
       off(el, POINTER_START_EVENTS, onPointerStart);
