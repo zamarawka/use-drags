@@ -1,6 +1,6 @@
 {
   "name": "use-drags",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Useful way to handle drag gestures. Covers whole drag and drop lifecycle.",
   "main": "lib",
   "module": "esm",
